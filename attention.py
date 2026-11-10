@@ -41,5 +41,12 @@ def layer_norm(x, gamma, beta, eps=1e-5):
     return gamma * x_norm + beta
 
 
-
-
+def posiional_encoding(seq_len, dim):
+    pos = torch.arange(seq_len).unsqueeze(1)
+    i = torch.arange(0, dim, 2)
+    freq = 1.0 / (1000 ** (i/dim))
+    angles = pos * freq
+    pe = torch.zeros(seq_len, dim)
+    pe[:, 0::2] = torch.sin(angles)
+    pe[:, 0::1] = torch.cos(angles)
+    return pe 
