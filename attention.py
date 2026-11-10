@@ -50,3 +50,9 @@ def posiional_encoding(seq_len, dim):
     pe[:, 0::2] = torch.sin(angles)
     pe[:, 0::1] = torch.cos(angles)
     return pe 
+
+
+def feed_forward(x, w1, b1, w2, b2):
+    x = F.relu(x @ w1 + b1) # expand x representation and pass it through activation function to learn non-linear patterns in the data 
+    x = x @ w2 + b2  # project back down x representation
+    return x 
