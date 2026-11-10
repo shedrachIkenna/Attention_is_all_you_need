@@ -10,6 +10,9 @@ n_heads = 4
 
 # ------------------ Attention parameters initialization -----------------------------------
 w_q = torch.randn(dim, dim) / dim ** 0.5 
+w_k = torch.randn(dim, dim) / dim ** 0.5 
+w_v = torch.randn(dim, dim) / dim ** 0.5 
+w_o = torch.randn(dim, dim) / dim ** 0.5 
 
 
 torch.manual_seed(0)
