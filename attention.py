@@ -2,6 +2,16 @@ import torch
 import torch.nn.functional as F 
 
 
+# --------------------- Base setting ------------------------------------------------------
+dim = 16 
+vocab_size = 10 
+seq_len = 10 
+n_heads = 4 
+
+# ------------------ Attention parameters initialization -----------------------------------
+w_q = torch.randn(dim, dim) / dim ** 0.5 
+
+
 torch.manual_seed(0)
 
 def attention(q, k, v):
@@ -56,3 +66,4 @@ def feed_forward(x, w1, b1, w2, b2):
     x = F.relu(x @ w1 + b1) # expand x representation and pass it through activation function to learn non-linear patterns in the data 
     x = x @ w2 + b2  # project back down x representation
     return x 
+
