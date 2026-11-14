@@ -24,13 +24,13 @@ def attention(q, k, v):
     out = weight @ v # (n_heads, T, T) @ (n_heads, T, d_k) => (n_heads, T, d_k) 
     return weight, out  
 
-def multi_head_attention(emb, w_q, w_k, w_v, w_o, n_heads):
-    T, dim = emb.shape 
+def multi_head_attention(emb_pe, w_q, w_k, w_v, w_o, n_heads):
+    T, dim = emb_pe.shape 
     d_k = dim // n_heads 
 
-    q = emb @ w_q # (T, dim) @ (dim, dim) -> (T, dim)
-    k = emb @ w_k # (T, dim) @ (dim, dim) -> (T, dim)
-    v = emb @ w_v # (T, dim) @ (dim, dim) -> (T, dim) 
+    q = emb_pe @ w_q # (T, dim) @ (dim, dim) -> (T, dim)
+    k = emb_pe @ w_k # (T, dim) @ (dim, dim) -> (T, dim)
+    v = emb_pe @ w_v # (T, dim) @ (dim, dim) -> (T, dim) 
 
     # split q, k, v into heads
     # (T, dim) -> (T, n_heads, d_k) -> (n_heads, T, d_k)
@@ -70,3 +70,13 @@ def feed_forward(x, w1, b1, w2, b2):
     x = x @ w2 + b2  # project back down x representation
     return x 
 
+
+# Encoder block 
+# Multihead Attention -> Layer norm -> Feed forward network -> Layer norm 
+
+def encoder_block(emb_pe, w_q, w_k, w_v, w_o, n_heads, gamma1, beta1, gamma2, beta2, ffn_w1, ffn_b1, ffn_w2, ffn_b2):
+    attn_out, weight = multi_head_attention(emb_pe, w_q, w_k, w_v, w_o, n_heads)
+    x = layer_norm(emb_pe + attn_out, gamma1, beta1)
+    ffn_out = feed_forward(x, ffn_w1, ffn_b1, ffn_w2, ffn_b2)
+    ffn_out = layer_norm(x + ffn_out, gamma2, beta2)
+    return ffn_out
