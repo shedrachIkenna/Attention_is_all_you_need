@@ -14,6 +14,12 @@ w_k = torch.randn(dim, dim) / dim ** 0.5
 w_v = torch.randn(dim, dim) / dim ** 0.5 
 w_o = torch.randn(dim, dim) / dim ** 0.5 
 
+# ------------------- Layer norm parameters -------------------------------------
+gamma1 = torch.ones(dim,) 
+beta1 = torch.zeros(dim,)
+gamma2 = torch.ones(dim,) 
+beta2 = torch.zeros(dim,)
+
 
 torch.manual_seed(0)
 
