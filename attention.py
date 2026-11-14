@@ -20,6 +20,12 @@ beta1 = torch.zeros(dim,)
 gamma2 = torch.ones(dim,) 
 beta2 = torch.zeros(dim,)
 
+# --------------------- Feed forward paramters ----------------------------------
+ffn_w1 = torch.randn(dim, dim*4) // (dim**0.5) # (seq_len, dim) @ (dim, dim*4) => (seq_len, dim*4)
+ffn_b1 = torch.randn(dim*4) // (dim**0.5)      # (seq_len, dim*4) + (dim*4) => (seq_len, dim*4)
+ffn_w2 = torch.randn(dim*4, dim) // (dim**0.5) # (seq_len, dim*4) @ (dim*4, dim) => (seq_len, dim)
+ffn_b2 = torch.randn(dim) // (dim**0.5)        # (seq_len, dim) + (dim) => (seq_len, dim)
+
 
 torch.manual_seed(0)
 
