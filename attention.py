@@ -26,6 +26,14 @@ ffn_b1 = torch.randn(dim*4) // (dim**0.5)      # (seq_len, dim*4) + (dim*4) => (
 ffn_w2 = torch.randn(dim*4, dim) // (dim**0.5) # (seq_len, dim*4) @ (dim*4, dim) => (seq_len, dim)
 ffn_b2 = torch.randn(dim) // (dim**0.5)        # (seq_len, dim) + (dim) => (seq_len, dim)
 
+# ----------------------- Embedding matrix ------------------------------------------
+C = torch.randn(vocab_size, dim) // (dim**0.5)
+
+
+# ----------------------- Forward Output Projection params --------------------------------- 
+w_out = torch.randn(dim, vocab_size) * 0.01 
+b_out = torch.randn(vocab_size) * 0  # zero bias at initialization 
+
 
 torch.manual_seed(0)
 
